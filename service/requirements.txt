@@ -1,0 +1,4 @@
+Flask==1.1.1
+CherryPy==18.2.0
+sesamutils==0.1.10
+google-cloud-bigquery==1.21.0
