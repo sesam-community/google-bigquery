@@ -27,20 +27,22 @@ Can be used to
       "query" : "full scan query"
       "updated_column": {
         "name" : name of the updated_column,
-        "data_type": dataype of the updated_column in the query. must be one of [google-big-query StandardSqlDataType](https://googleapis.dev/python/bigquery/latest/gapic/v2/enums.html#google.cloud.bigquery_v2.gapic.enums.StandardSqlDataType)
+        "data_type": dataype of the updated_column in the query. must be one of google-big-query StandardSqlDataTypes¹
       },
       "updated_query": updated_query where since parameter is written as "@since" instead of ":since"
+
+¹ [google-big-query StandardSqlDataType](https://googleapis.dev/python/bigquery/latest/gapic/v2/enums.html#google.cloud.bigquery_v2.gapic.enums.StandardSqlDataType)
 
  ### Query Parameters
 
  | CONFIG_NAME        | DESCRIPTION           | IS_REQUIRED  |DEFAULT_VALUE|
  | -------------------|---------------------|:------------:|:-----------:|
  | ms_query_key | key to the query config that is to be loaded | yes | n/a |
- | ms_page_size¹ | number of rows to fetch and stream per page | no | 100 |
- | limit¹ | sesam pull protocol's "limit" parameter number of entities to be returned. Bound to the limit phrase in the query and page size in the config | no | <no limit> |
+ | ms_page_size² | number of rows to fetch and stream per page | no | 100 |
+ | limit² | sesam pull protocol's "limit" parameter number of entities to be returned. Bound to the limit phrase in the query and page size in the config | no | <no limit> |
  | since | sesam pull protocol's "since" parameter  | no | 12H |
 
- ¹: <span style="font-family:Papyrus; font-size:0.5em;">effective value depends on the (A)limit clause in the query, (B)limit query_parameter and (C) ms_page_size parameter. First (A) is applied. Thereafter the lowest multiple of (C) following (B) is picked.</span>
+ ² <span style="font-family:Papyrus; font-size:0.5em;">effective value depends on the (A)limit clause in the query, (B)limit query_parameter and (C) ms_page_size parameter. First (A) is applied. Thereafter the lowest multiple of (C) following (B) is picked.</span>
 
 
  ### An example of system config:
