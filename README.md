@@ -14,10 +14,9 @@ Can be used to
 
  | CONFIG_NAME        | DESCRIPTION           | IS_REQUIRED  |DEFAULT_VALUE|
  | -------------------|---------------------|:------------:|:-----------:|
- | GOOGLE_APPLICATION_CREDENTIALS | file with optional path to save the service account key file content to | yes | n/a |
  | GOOGLE_APPLICATION_CREDENTIALS_CONTENT | service account key file content | yes | n/a |
  | QUERY_CONFIGS | dict where keys are query-keys and values are configuration per query. See details below  | yes | check the code |
- | LOG_LEVEL | log level. either of  | no | INFO |
+ | LOG_LEVEL | log level. One of [DEBUG|INFO|WARNING|ERROR|CRITICAL] no | INFO |
 
 
  ##### QUERY_CONFIGS schema:
@@ -54,8 +53,7 @@ Can be used to
    "connect_timeout": 60,
    "docker": {
      "environment": {
-       "GOOGLE_APPLICATION_CREDENTIALS": "service-account-key.json",
-       "GOOGLE_APPLICATION_CREDENTIALS_CONTENT": "$SECRET(service-account-key-content)",
+       "GOOGLE_APPLICATION_CREDENTIALS_CONTENT": "$SECRET(my-service-account-key-content)",
        "QUERY_CONFIGS": {
          "my_query": {
            "primary_key": ["col1"],
@@ -79,7 +77,7 @@ Can be used to
 ### An example of input-pipe config:
 ```json
 {
-  "_id": "gbq-hafslund-mdm-meterpoint-maxeffect",
+  "_id": "my-google-bq-pipe",
   "type": "pipe",
   "source": {
     "type": "json",

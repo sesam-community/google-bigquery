@@ -5,8 +5,12 @@ from flask import Flask, request, Response, abort
 from google.cloud import bigquery
 from sesamutils import VariablesConfig, sesam_logger
 from sesamutils.flask import serve
+import os
 
 app = Flask(__name__)
+
+# set GOOGLE_APPLICATION_CREDENTIALS envvar for GCP authentication
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'service_account_key.json'
 
 required_env_vars = ["GOOGLE_APPLICATION_CREDENTIALS", "GOOGLE_APPLICATION_CREDENTIALS_CONTENT", "QUERY_CONFIGS"]
 optional_env_vars = [("DEFAULT_PAGE_SIZE", 100)]
@@ -21,14 +25,11 @@ env_config.QUERY_CONFIGS = json.loads(env_config.QUERY_CONFIGS)
 env_config.DEFAULT_PAGE_SIZE = int(env_config.DEFAULT_PAGE_SIZE)
 
 
-logger.info('started up with\n\tGOOGLE_APPLICATION_CREDENTIALS:{}\n\tQUERY_CONFIGS:{}'.format(env_config.GOOGLE_APPLICATION_CREDENTIALS, env_config.QUERY_CONFIGS))
+logger.info('started up with\n\tQUERY_CONFIGS:{}'.format(env_config.QUERY_CONFIGS))
 
 # write out service config from env var to known file
-if env_config.GOOGLE_APPLICATION_CREDENTIALS:
-    with open(env_config.GOOGLE_APPLICATION_CREDENTIALS, "wb") as out_file:
-        out_file.write(env_config.GOOGLE_APPLICATION_CREDENTIALS_CONTENT.encode())
-
-
+with open(env_config.GOOGLE_APPLICATION_CREDENTIALS, "wb") as out_file:
+    out_file.write(env_config.GOOGLE_APPLICATION_CREDENTIALS_CONTENT.encode())
 
 def stream_rows(query_key, since, limit, page_size):
     is_first_yield = True
